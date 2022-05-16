@@ -1,6 +1,7 @@
-# webpack-template
+# Battleship
 
-This is a simple template that installs the basic stuff that I need for webpack and other things like eslint and prettier. 
+Battleship game
+
 
 cheat sheet:
 
