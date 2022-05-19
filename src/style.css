@@ -7,3 +7,125 @@
   font-family: "Roboto", sans-serif;
 }
 
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#content{
+  width: min(80vw, 500px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    'title title'
+    'enemyGridTitle fleetTitle'
+    'enemyGrid fleet'
+    'status status'
+    'selfGrid selfGrid';
+}
+
+#title{
+  grid-area: title;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  padding: 0.5em;
+}
+
+#enemyGridContainerTitle{
+  grid-area: enemyGridTitle;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 0.5em;
+}
+
+#enemyGridContainer{
+  grid-area: enemyGrid;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 1em;
+  display:grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+#enemyGridContainer>div{
+  border: 1px solid black;
+}
+
+#fleetTitle{
+  grid-area: fleetTitle;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 0.5em;
+}
+
+#fleet{
+  grid-area: fleet;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 2em;
+  align-self: center;
+  justify-self: center;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.shipTypeContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5em;
+}
+
+.ship{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25em;
+}
+
+.ship>div{
+  border: 1px solid black;
+  width: 1em;
+  height: 1em;
+}
+
+#status{
+  grid-area: status;
+  align-self: center;
+  justify-self: center;
+}
+
+#selfGridContainer{
+  grid-area: selfGrid;
+  align-self: center;
+  justify-self: center;
+  display:grid;
+  grid-template-columns: repeat(10, min(calc(50vw / 10), 40px));
+  grid-template-rows: repeat(10, min(calc(50vw / 10), 40px));
+}
+
+#selfGridContainer>div{
+  border: 1px solid black;
+}
+
