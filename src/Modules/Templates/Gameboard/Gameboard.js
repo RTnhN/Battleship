@@ -2,8 +2,8 @@ import Ship from "../Ship/Ship.js"
 import _ from "lodash";
 
 class Gameboard {
-  constructor() {
-    this.BOARD_SIZE = 3;
+  constructor(boardSize = 10) {
+    this.BOARD_SIZE = boardSize;
     this.board = Array.from(Array(this.BOARD_SIZE), () => new Array(this.BOARD_SIZE))
     this.ships = [];
     this.goodHits= [];

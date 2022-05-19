@@ -3,7 +3,7 @@ import Gameboard from "./Gameboard.js"
 let gameboard;
 
 beforeEach(() => {
-  gameboard = new Gameboard()
+  gameboard = new Gameboard(3)
 });
 
 function placeShip(){
