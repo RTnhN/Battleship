@@ -19,15 +19,6 @@ class DOM {
 
     DOM.createGrid(this.enemyGridContainer, gridSize);
 
-    this.fleetTitle = document.createElement('h2');
-    this.fleetTitle.id = 'fleetTitle';
-    this.fleetTitle.textContent = 'Your Fleet';
-
-    this.fleet = document.createElement('div');
-    this.fleet.id = 'fleet';
-
-    DOM.makeFleet(this.fleet, this.fleetList);
-
     this.status = document.createElement('p');
     this.status.id = 'status';
     this.status.textContent = 'status';
@@ -40,8 +31,6 @@ class DOM {
     placeholder.appendChild(this.title);
     placeholder.appendChild(this.enemyGridContainerTitle);
     placeholder.appendChild(this.enemyGridContainer);
-    placeholder.appendChild(this.fleetTitle);
-    placeholder.appendChild(this.fleet);
     placeholder.appendChild(this.status);
     placeholder.appendChild(this.selfGridContainer);
 
@@ -65,30 +54,6 @@ class DOM {
     if (element.firstChild) {
       element.removeChild(element.firstChild);
     }
-  }
-
-  static makeFleet(fleetNode, fleet){
-    const placeholder = document.createDocumentFragment();
-    placeholder.append(...(fleet.map(ship => DOM.makeShipGroup(ship))));
-    fleetNode.appendChild(placeholder);
-  }
-
-  static makeShipGroup(shipType){
-    const shipTypeContainer = document.createElement('div');
-    shipTypeContainer.classList.add("shipTypeContainer")
-    for (let ship = 0; ship < shipType.count; ship++){
-      shipTypeContainer.appendChild(DOM.makeShip(shipType.size));
-    }
-    return shipTypeContainer
-  }
-
-  static makeShip(length){
-    const ship = document.createElement('div');
-    ship.classList.add("ship")
-    for(let shipBlock = 0; shipBlock < length; shipBlock++){
-      ship.appendChild(document.createElement('div'))
-    }
-    return ship
   }
 
   updateDOMFromGameboard(selfGameboard, enemyGameboard){
@@ -117,8 +82,6 @@ class DOM {
       element.classList.add('miss');
       element.textContent = 'X';
     });
-
-
 
   }
 

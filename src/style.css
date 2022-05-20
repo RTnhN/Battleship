@@ -15,14 +15,14 @@ body{
 }
 
 #content{
-  width: min(80vw, 500px);
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas: 
     'title title'
-    'enemyGridTitle fleetTitle'
-    'enemyGrid fleet'
+    'enemyGridTitle enemyGridTitle'
+    'enemyGrid enemyGrid'
     'status status'
     'selfGrid selfGrid';
 }
@@ -53,7 +53,6 @@ body{
   justify-self: center;
   width: 100%;
   aspect-ratio: 1 / 1;
-  padding: 1em;
   display:grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -124,9 +123,11 @@ body{
   grid-area: selfGrid;
   align-self: center;
   justify-self: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   display:grid;
-  grid-template-columns: repeat(10, min(calc(50vw / 10), 40px));
-  grid-template-rows: repeat(10, min(calc(50vw / 10), 40px));
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
 }
 
 #selfGridContainer>div{
@@ -134,7 +135,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .coloredShip{
@@ -144,6 +145,7 @@ body{
 .hit{
   color: red;
 }
+
 .miss{
   color: hsl(229, 100%, 50%);
 }
