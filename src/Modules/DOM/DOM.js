@@ -1,47 +1,49 @@
+import PointsHelper from "../Util/PointsHelper";
+
 class DOM {
-  constructor(contentNode, gridSize = 10) {
+  constructor(contentNode, fleetList, gridSize = 10) {
     this.contentNode = contentNode;
-    this.fleetList = [{"size":5,"count":1},{"size":4,"count":2},{"size":3,"count":3}, {"size":2,"count":4}]
+    this.fleetList = fleetList;
     const placeholder = document.createDocumentFragment()
 
-    const title = document.createElement('h1');
-    title.id = "title";
-    title.textContent = "BATTLESHIP";
+    this.title = document.createElement('h1');
+    this.title.id = "title";
+    this.title.textContent = "BATTLESHIP";
 
-    const enemyGridContainerTitle = document.createElement('h2');
-    enemyGridContainerTitle.id = 'enemyGridContainerTitle';
-    enemyGridContainerTitle.textContent = 'Enemy Grid';
+    this.enemyGridContainerTitle = document.createElement('h2');
+    this.enemyGridContainerTitle.id = 'enemyGridContainerTitle';
+    this.enemyGridContainerTitle.textContent = 'Enemy Grid';
 
-    const enemyGridContainer = document.createElement('div');
-    enemyGridContainer.id = 'enemyGridContainer';
+    this.enemyGridContainer = document.createElement('div');
+    this.enemyGridContainer.id = 'enemyGridContainer';
 
-    DOM.createGrid(enemyGridContainer, gridSize);
+    DOM.createGrid(this.enemyGridContainer, gridSize);
 
-    const fleetTitle = document.createElement('h2');
-    fleetTitle.id = 'fleetTitle';
-    fleetTitle.textContent = 'Your Fleet';
+    this.fleetTitle = document.createElement('h2');
+    this.fleetTitle.id = 'fleetTitle';
+    this.fleetTitle.textContent = 'Your Fleet';
 
-    const fleet = document.createElement('div');
-    fleet.id = 'fleet';
+    this.fleet = document.createElement('div');
+    this.fleet.id = 'fleet';
 
-    DOM.makeFleet(fleet, this.fleetList);
+    DOM.makeFleet(this.fleet, this.fleetList);
 
-    const status = document.createElement('p');
-    status.id = 'status';
-    status.textContent = 'status';
+    this.status = document.createElement('p');
+    this.status.id = 'status';
+    this.status.textContent = 'status';
 
-    const selfGridContainer = document.createElement('selfGridContainer');
-    selfGridContainer.id = 'selfGridContainer';
+    this.selfGridContainer = document.createElement('selfGridContainer');
+    this.selfGridContainer.id = 'selfGridContainer';
 
-    DOM.createGrid(selfGridContainer, gridSize);
+    DOM.createGrid(this.selfGridContainer, gridSize);
 
-    placeholder.appendChild(title);
-    placeholder.appendChild(enemyGridContainerTitle);
-    placeholder.appendChild(enemyGridContainer);
-    placeholder.appendChild(fleetTitle);
-    placeholder.appendChild(fleet);
-    placeholder.appendChild(status);
-    placeholder.appendChild(selfGridContainer);
+    placeholder.appendChild(this.title);
+    placeholder.appendChild(this.enemyGridContainerTitle);
+    placeholder.appendChild(this.enemyGridContainer);
+    placeholder.appendChild(this.fleetTitle);
+    placeholder.appendChild(this.fleet);
+    placeholder.appendChild(this.status);
+    placeholder.appendChild(this.selfGridContainer);
 
     contentNode.appendChild(placeholder);
   }
@@ -49,8 +51,8 @@ class DOM {
   static createGrid(parentElement, width, height = undefined) {
     const placeholder = document.createDocumentFragment();
     height = height === undefined ? width : height
-    for (let row = 1; row <= height; row++) {
-      for (let col = 1; col <= width; col++) {
+    for (let row = 0; row < height; row++) {
+      for (let col = 0; col < width; col++) {
         placeholder.appendChild(document.createElement('div'));
         placeholder.lastChild.id = `${parentElement.id},${col},${row}`;
       }
@@ -58,6 +60,7 @@ class DOM {
     DOM.clearElement(parentElement);
     parentElement.appendChild(placeholder);
   }
+
   static clearElement(element) {
     if (element.firstChild) {
       element.removeChild(element.firstChild);
@@ -88,6 +91,50 @@ class DOM {
     return ship
   }
 
+  updateDOMFromGameboard(selfGameboard, enemyGameboard){
+    DOM.clearGrid(this.enemyGridContainer);
+    DOM.clearGrid(this.selfGridContainer);
+    selfGameboard.cellsWithShips.forEach(ship => 
+      document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,ship)).classList.add('coloredShip')
+      );
+    selfGameboard.hits.forEach(hit => {
+      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,hit));
+      element.classList.add('hit');
+      element.textContent = 'X';
+    });
+    selfGameboard.misses.forEach(miss => {
+      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,miss));
+      element.classList.add('miss');
+      element.textContent = 'X';
+    });
+    enemyGameboard.hits.forEach(hit => {
+      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,hit));
+      element.classList.add('hit');
+      element.textContent = 'X';
+    });
+    enemyGameboard.misses.forEach(miss => {
+      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,miss));
+      element.classList.add('miss');
+      element.textContent = 'X';
+    });
+
+
+
+  }
+
+  static paintShipLocation(gridContainer, coords){
+    const points = PointsHelper.returnPointsBetweenCoords(coords);
+    const pointsFormatted = points.map(point => `${gridContainer.id},${point.x},${point.y}`)
+    pointsFormatted.forEach(points => document.getElementById(points).classList.add('coloredShip'))
+  }
+
+  static clearGrid(gridContainer){
+    Array.from(gridContainer.children)
+      .forEach(cell => {
+        cell.className = '';
+        cell.textContent = '';
+      });
+  }
 }
 
 export default DOM;
