@@ -14,18 +14,24 @@ body{
   align-items: center;
 }
 
+/* content */
+
 #content{
+  /* width: min(80vw, 500px); */
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas: 
     'title title'
+    'status status'
+    'selfGrid selfGrid'
     'enemyGridTitle enemyGridTitle'
     'enemyGrid enemyGrid'
-    'status status'
-    'selfGrid selfGrid';
+    ;
 }
+
+/* title */
 
 #title{
   grid-area: title;
@@ -36,6 +42,41 @@ body{
   font-weight: bold;
   padding: 0.5em;
 }
+
+/* status */
+
+#status{
+  grid-area: status;
+  align-self: center;
+  justify-self: center;
+}
+
+/* Self Grid Container */
+
+#selfGridContainer{
+  grid-area: selfGrid;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display:grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+#selfGridContainer>div{
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.coloredShip{
+  background-color: hsl(0, 0%, 50%);
+}
+
+/* Enemy Grid Container */
 
 #enemyGridContainerTitle{
   grid-area: enemyGridTitle;
@@ -66,61 +107,103 @@ body{
   cursor: crosshair;
 }
 
-#fleetTitle{
-  grid-area: fleetTitle;
-  align-self: center;
-  justify-self: center;
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: bold;
-  padding: 0.5em;
+.hit{
+  color: red;
 }
 
-#fleet{
-  grid-area: fleet;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  margin: 2em;
+.miss{
+  color: hsl(229, 100%, 50%);
+}
+
+#placeShipModal{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#placeShipModalContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+  'gameTitle gameTitle'
+  'title title'
+  'subtitle subtitle'
+  'shipsContainer shipsContainer'
+  'grid grid'
+  'resetButton cancelButton';
+}
+
+#placeShipModalGameTitle{
+  grid-area: gameTitle;
+  align-self: center;
+  justify-self: center;
+}
+
+#placeShipModalTitle{
+ grid-area: title;
+ align-self: center;
+ justify-self: center;
+}
+
+#placeShipModalSubtitle{
+  grid-area: subtitle;
+  align-self: center;
+  justify-self: center;
+}
+
+#placeShipModalShipsContainer{
+  grid-area: shipsContainer;
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+  'title title'
+  'sizeTitle sizeValues'
+  'countTitle countValues'
+}
+
+#placeShipModalShipsContainerTitle{
+  grid-area: title;
+  align-self: center;
+  justify-self: center;
+}
+
+#placeShipModalShipsContainerSizeTitle{
+  grid-area: sizeTitle;
+  align-self: center;
+  justify-self: flex-start;
+}
+
+#placeShipModalShipsContainerCountTitle{
+  grid-area: countTitle;
+  align-self: center;
+  justify-self: flex-start;
+}
+
+#placeShipModalShipsContainerSizeContainer{
+  grid-area: sizeValues;
   align-self: center;
   justify-self: center;
   display:flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
+  gap: 1.5rem;
 }
 
-.shipTypeContainer{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 0.5em;
-}
-
-.ship{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0.25em;
-}
-
-.ship>div{
-  border: 1px solid black;
-  width: 1em;
-  height: 1em;
-}
-
-#status{
-  grid-area: status;
+#placeShipModalShipsContainerCountContainer{
+  grid-area: countValues;
   align-self: center;
   justify-self: center;
+  display:flex;
+  flex-direction: row;
+  gap: 1.5rem;
 }
 
-#selfGridContainer{
-  grid-area: selfGrid;
+#placeShipModalGrid{
+  grid-area: grid;
   align-self: center;
   justify-self: center;
   width: 100%;
@@ -130,22 +213,18 @@ body{
   grid-template-rows: repeat(10, 1fr);
 }
 
-#selfGridContainer>div{
+#placeShipModalGrid>div{
   border: 1px solid black;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  align-items: center;
+  cursor: crosshair;
 }
 
-.coloredShip{
-  background-color: hsl(0, 0%, 50%);
+#placeShipModalResetButton{
+  grid-area: resetButton;
 }
 
-.hit{
-  color: red;
-}
-
-.miss{
-  color: hsl(229, 100%, 50%);
+#placeShipModalCancelButton{
+  grid-area: cancelButton;
 }
