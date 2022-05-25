@@ -43,6 +43,25 @@ class PointsHelper {
     return { "x": _.random(start, end, false), "y": _.random(start, end, false) }
   }
 
+  static getXYShipLen(point1, point2){
+    return {'dx': Math.abs(point1.x - point2.x)+1, 'dy': Math.abs(point1.y - point2.y)+1}
+  }
+
+  static getShipLen(point1, point2){
+    const XYShipLen = PointsHelper.getXYShipLen(point1, point2);
+    return XYShipLen.dy < XYShipLen.dx ? XYShipLen.dx : XYShipLen.dy
+  }
+
+  static makeCoordsStraight(start, end){
+    const distances = this.getXYShipLen(start, end);
+    if (distances.dy > distances.dx){
+      return(PointsHelper.combineShipPoints(start, {'x':start.x, 'y':end.y}))
+    } else if (distances.dy < distances.dx){
+      return(PointsHelper.combineShipPoints(start, {'x':end.x, 'y':start.y}))
+    } 
+    return null
+    
+  }
   /**
    * @author Peter Kelley
    * @author pgkelley4@gmail.com
