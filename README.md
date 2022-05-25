@@ -2,6 +2,8 @@
 
 Battleship game
 
+Live Link: https://rtnhn.github.io/Battleship/
+
 
 cheat sheet:
 
@@ -14,4 +16,7 @@ run webpack build continuously: npx webpack --watch
 linting should be done automatically
 
 prettier: npx prettier --write .
-prettier watch only: npx prettier --watch .
+prettier watch only: npx prettier --watch 
+
+git subtree push --prefix dist origin gh-pages
+
