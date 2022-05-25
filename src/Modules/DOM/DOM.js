@@ -10,6 +10,15 @@ class DOM {
     this.title.id = "title";
     this.title.textContent = "BATTLESHIP";
 
+    this.status = document.createElement('p');
+    this.status.id = 'status';
+    this.status.textContent = 'status';
+
+    this.selfGridContainer = document.createElement('selfGridContainer');
+    this.selfGridContainer.id = 'selfGridContainer';
+
+    DOM.createGrid(this.selfGridContainer, gridSize);
+
     this.enemyGridContainerTitle = document.createElement('h2');
     this.enemyGridContainerTitle.id = 'enemyGridContainerTitle';
     this.enemyGridContainerTitle.textContent = 'Enemy Grid';
@@ -29,6 +38,8 @@ class DOM {
     DOM.createGrid(this.selfGridContainer, gridSize);
 
     placeholder.appendChild(this.title);
+    placeholder.appendChild(this.status);
+    placeholder.appendChild(this.selfGridContainer);
     placeholder.appendChild(this.enemyGridContainerTitle);
     placeholder.appendChild(this.enemyGridContainer);
     placeholder.appendChild(this.status);
@@ -57,8 +68,7 @@ class DOM {
   }
 
   updateDOMFromGameboard(selfGameboard, enemyGameboard){
-    DOM.clearGrid(this.enemyGridContainer);
-    DOM.clearGrid(this.selfGridContainer);
+    this.clearGrids();
     selfGameboard.cellsWithShips.forEach(ship => 
       document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,ship)).classList.add('coloredShip')
       );
@@ -82,13 +92,16 @@ class DOM {
       element.classList.add('miss');
       element.textContent = 'X';
     });
-
   }
 
   static paintShipLocation(gridContainer, coords){
     const points = PointsHelper.returnPointsBetweenCoords(coords);
     const pointsFormatted = points.map(point => `${gridContainer.id},${point.x},${point.y}`)
     pointsFormatted.forEach(points => document.getElementById(points).classList.add('coloredShip'))
+  }
+  clearGrids(){
+    DOM.clearGrid(this.enemyGridContainer);
+    DOM.clearGrid(this.selfGridContainer);
   }
 
   static clearGrid(gridContainer){
