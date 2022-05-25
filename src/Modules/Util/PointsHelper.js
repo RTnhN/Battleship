@@ -62,6 +62,10 @@ class PointsHelper {
     return null
     
   }
+
+  /*  I included this in this page with the author's name and other comments since this was
+      not a standard package or anything.
+  */
   /**
    * @author Peter Kelley
    * @author pgkelley4@gmail.com
