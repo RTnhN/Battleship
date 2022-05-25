@@ -93,20 +93,19 @@ class Game {
       this.fleetListClone = structuredClone(this.fleetList);
       this.DOM.updatePlaceShipModalRows(this.fleetListClone);
       this.DOM.placeShipModal.showModal();
-      this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {once:true});
+      this.controller = new AbortController();
+      this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {signal:this.controller.signal});
     }
   }
 
   placeShipModalGridClicked(event){
     if (event.target === event.currentTarget){
-      this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {once:true});
       return;
     } 
     if (this.startClick === null){
       this.startClick = PointsHelper.DOMStringToObject(event.target.id);
       this.startClickElement = event.target;
       this.startClickElement.classList.add('coloredShip');
-      this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {once:true});
     } else {
       this.endClick = PointsHelper.DOMStringToObject(event.target.id);
       const straightCoords = PointsHelper.makeCoordsStraight(this.startClick, this.endClick)
@@ -115,7 +114,6 @@ class Game {
         this.startClick = null;
         this.endClick = null;
         this.startClickElement.classList.remove('coloredShip');
-        this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {once:true});
         return;
       }
       const shipLength = PointsHelper.getShipLen(this.startClick, this.endClick);
@@ -125,7 +123,6 @@ class Game {
         this.startClick = null;
         this.endClick = null;
         this.startClickElement.classList.remove('coloredShip');
-        this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {once:true});
         return;
       } 
       this.currentPlayer.gameboard.placeShip(straightCoords);
@@ -137,12 +134,12 @@ class Game {
         this.DOM.placeShipModal.close();
         this.startClick = null;
         this.endClick = null;
+        this.controller.abort();
         this.setup();
         return;
       }
       this.startClick = null;
       this.endClick = null;
-      this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {once:true});
     }
   }
 
