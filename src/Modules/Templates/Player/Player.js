@@ -9,6 +9,7 @@ class Player {
     this.name = name;
     this.attackHits = [];
     this.attackMisses = [];
+    this.setup = false;
     if (type === "computer") {
       this.attack = this.computerAttack;
     } else if (type === 'human') {
