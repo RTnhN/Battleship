@@ -16,6 +16,8 @@ class PointsHelper {
   }
 
   static range(start, end) {
+    start = Number(start);
+    end = Number(end);
     const smallest = start > end ? end : start;
     const largest = start > end ? start : end
     return Array(largest - smallest + 1).fill().map((_, idx) => smallest + idx)
