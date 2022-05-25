@@ -58,7 +58,9 @@ class PointsHelper {
       return(PointsHelper.combineShipPoints(start, {'x':start.x, 'y':end.y}))
     } else if (distances.dy < distances.dx){
       return(PointsHelper.combineShipPoints(start, {'x':end.x, 'y':start.y}))
-    } 
+    } else if (distances.dx === 1 && distances.dy === 1){
+      return(PointsHelper.combineShipPoints(start, end))
+    }
     return null
     
   }

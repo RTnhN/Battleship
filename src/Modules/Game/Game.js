@@ -110,7 +110,7 @@ class Game {
       this.endClick = PointsHelper.DOMStringToObject(event.target.id);
       const straightCoords = PointsHelper.makeCoordsStraight(this.startClick, this.endClick)
       if (straightCoords === null){
-        alert('Hey, why don\'t you stop being a trouble maker. You know exactly what you are doing...');
+        alert('Try to click on two grid squares that are in line with each other. Currently, it is ambiguous how you want the ship placed (it can\'t be diagonal obviously.).');
         this.startClick = null;
         this.endClick = null;
         this.startClickElement.classList.remove('coloredShip');
