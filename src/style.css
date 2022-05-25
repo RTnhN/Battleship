@@ -7,6 +7,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+:root{
+  --ship-color:  hsl(0, 0%, 50%);
+  --water-color: hsl(240, 100%, 67%);
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -73,7 +78,7 @@ body{
 }
 
 .coloredShip{
-  background-color: hsl(0, 0%, 50%);
+  background-color: var(--ship-color);
 }
 
 /* Enemy Grid Container */
@@ -108,11 +113,11 @@ body{
 }
 
 .hit{
-  color: red;
+  background-color: var(--ship-color);
 }
 
 .miss{
-  color: hsl(229, 100%, 50%);
+  background-color: var(--water-color);
 }
 
 #placeShipModal{

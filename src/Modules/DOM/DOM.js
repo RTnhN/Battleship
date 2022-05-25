@@ -110,22 +110,20 @@ class DOM {
     selfGameboard.hits.forEach(hit => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,hit));
       element.classList.add('hit');
-      element.textContent = 'X';
+      element.textContent = '🔥';
     });
     selfGameboard.misses.forEach(miss => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,miss));
       element.classList.add('miss');
-      element.textContent = 'X';
     });
     enemyGameboard.hits.forEach(hit => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,hit));
       element.classList.add('hit');
-      element.textContent = 'X';
+      element.textContent = '🔥';
     });
     enemyGameboard.misses.forEach(miss => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,miss));
       element.classList.add('miss');
-      element.textContent = 'X';
     });
   }
 
