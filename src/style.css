@@ -84,6 +84,8 @@ body{
 
 #selfGridContainer>div{
   border: 1px solid black;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,7 +113,6 @@ body{
   align-self: center;
   justify-self: center;
   width: 100%;
-  aspect-ratio: 1 / 1;
   display:grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -119,10 +120,13 @@ body{
 
 #enemyGridContainer>div{
   border: 1px solid black;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: crosshair;
+  font-size: 1rem;
 }
 
 .hit{
@@ -142,6 +146,7 @@ body{
 
 #placeShipModalContainer{
   display: grid;
+  width: clamp(300px, 80vw, 600px);
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   grid-template-areas:
