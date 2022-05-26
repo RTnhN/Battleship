@@ -41,6 +41,15 @@ class Gameboard {
     } 
     return 'alreadyHit';
     }
+    
+    resetGameboard(){
+      this.ships = [];
+      this.shipsCoords = [];
+      this.cellsWithShips = [];
+      this.hits= [];
+      this.misses = [];
+    }
+    
     get allShipsSunk(){
       return this.ships.every(ship => ship.sunk === true);
     }

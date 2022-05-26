@@ -13,6 +13,7 @@ class Game {
     this.DOM = new DOM(contentElement, this.fleetList);
     this.currentPlayer;
     this.opposingPlayer; 
+    this.DOM.placeShipModalResetButton.addEventListener('click', this.resetPlaceShip.bind(this));
     this.start(); 
   }
   start(){
@@ -162,6 +163,13 @@ class Game {
   switchPlayers(){
     this.currentPlayer = this.opposingPlayer;
     this.opposingPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
+  }
+
+  resetPlaceShip(){
+    DOM.clearGrid(this.DOM.placeShipModalGrid);
+    this.fleetListClone = structuredClone(this.fleetList);
+    this.DOM.updatePlaceShipModalRows(this.fleetListClone);
+    this.currentPlayer.gameboard.resetGameboard();
   }
 }
 
