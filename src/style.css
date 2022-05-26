@@ -30,6 +30,7 @@ body{
   grid-template-areas: 
     'title title'
     'status status'
+    'selfGridTitle selfGridTitle'
     'selfGrid selfGrid'
     'enemyGridTitle enemyGridTitle'
     'enemyGrid enemyGrid'
@@ -54,6 +55,18 @@ body{
   grid-area: status;
   align-self: center;
   justify-self: center;
+}
+
+/* Self Grid Container Title */
+
+#selfGridContainerTitle{
+  grid-area: selfGridTitle;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 0.5em;
 }
 
 /* Self Grid Container */

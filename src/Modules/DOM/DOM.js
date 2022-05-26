@@ -14,6 +14,10 @@ class DOM {
     this.status.id = 'status';
     this.status.textContent = 'status';
 
+    this.selfGridContainerTitle = document.createElement('h2');
+    this.selfGridContainerTitle.id = 'selfGridContainerTitle';
+    this.selfGridContainerTitle.textContent = 'Your Grid';
+
     this.selfGridContainer = document.createElement('selfGridContainer');
     this.selfGridContainer.id = 'selfGridContainer';
 
@@ -73,6 +77,7 @@ class DOM {
 
     placeholder.appendChild(this.title);
     placeholder.appendChild(this.status);
+    placeholder.appendChild(this.selfGridContainerTitle);
     placeholder.appendChild(this.selfGridContainer);
     placeholder.appendChild(this.enemyGridContainerTitle);
     placeholder.appendChild(this.enemyGridContainer);
