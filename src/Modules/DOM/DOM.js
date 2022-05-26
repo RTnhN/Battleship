@@ -114,7 +114,6 @@ class DOM {
   
     contentNode.appendChild(placeholder);
 
-    this.placeShipModalCancelButton.addEventListener('click', () => this.placeShipModal.close());
     this.readyToSwitchPlayerButton.addEventListener('click', () => this.switchPlayerModal.close());
     this.togglePlayerEntryForm.addEventListener('click', ()=>{
       if (this.playerEntryForm.style.display === ''){

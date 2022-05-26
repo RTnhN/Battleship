@@ -15,6 +15,10 @@ class Game {
     this.opposingPlayer; 
     this.DOM.placeShipModalResetButton.addEventListener('click', this.resetPlaceShip.bind(this));
     this.DOM.playerEntryForm.addEventListener('submit', this.start.bind(this));
+    this.DOM.placeShipModalCancelButton.addEventListener('click', () => {
+      this.DOM.placeShipModal.close();
+      this.controller.abort();
+    });
   }
 
   start(event){
