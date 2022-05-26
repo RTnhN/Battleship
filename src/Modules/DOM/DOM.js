@@ -243,7 +243,7 @@ class DOM {
   }
 
   updatePlayerNamePlaceShipModal(playerName){
-    this.placeShipModalSubtitle.textContent = playerName + ' Ship Placement';
+    this.placeShipModalTitle.textContent = playerName + ' Ship Placement';
   }
 
   makePlayerEntryForm(){
