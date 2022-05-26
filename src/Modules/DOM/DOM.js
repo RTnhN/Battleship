@@ -311,7 +311,7 @@ class DOM {
     fleet.forEach((element, index) => {
       const ship = document.createElement('p');
       ship.id = `placeShipModal${type}${index}`;
-      ship.classList.add('placeShipModal_'+type);
+      ship.classList.add(`placeShipModal_${type}`);
       ship.textContent = element[type];
       node.appendChild(ship);
     })
