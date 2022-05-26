@@ -29,6 +29,8 @@ body{
   grid-template-rows: auto;
   grid-template-areas: 
     'title title'
+    'togglePlayerForm togglePlayerForm'
+    'playerForm playerForm'
     'status status'
     'selfGridTitle selfGridTitle'
     'selfGrid selfGrid'
@@ -48,6 +50,101 @@ body{
   font-weight: bold;
   padding: 0.5em;
 }
+
+/* toggle player form */
+
+#togglePlayerEntryForm{
+  grid-area: togglePlayerForm;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+#playerEntryForm{
+  grid-area: playerForm;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  padding: 0.5em;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    'player1NameLabel player1TypeLabel'
+    'player1Name player1Type'
+    'player2NameLabel player2TypeLabel'
+    'player2Name player2Type'
+    'startButton startButton';
+}
+
+#player1NameLabel{
+  grid-area: player1NameLabel;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+#player1TypeLabel{
+  grid-area: player1TypeLabel;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+#player1Name{
+  grid-area: player1Name;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  width: 10rem;
+}
+#player1Type{
+  grid-area: player1Type;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+#player2NameLabel{
+  grid-area: player2NameLabel;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+#player2TypeLabel{
+  grid-area: player2TypeLabel;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+#player2Name{
+  grid-area: player2Name;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  width: 10rem;
+
+}
+
+#player2Type{
+  grid-area: player2Type;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+#startButton{
+  margin-top: 1rem;
+  padding: 0.5em;
+  grid-area: startButton;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  cursor: pointer;
+}
+
 
 /* status */
 
@@ -247,8 +344,49 @@ body{
 
 #placeShipModalResetButton{
   grid-area: resetButton;
+  align-self: center;
+  justify-self: center;
+  margin: .5rem;
+  padding: .5rem;
 }
 
 #placeShipModalCancelButton{
   grid-area: cancelButton;
+  align-self: center;
+  justify-self: center;
+  margin: .5rem;
+  padding: .5rem;
+}
+
+#switchPlayerModal{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#switchPlayerModal::backdrop{
+  background-color: white;
+
+}
+
+#switchPlayerModalContainer{
+  display: flex;
+  height: 80vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+#switchPlayerModalDescription{
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 2em;
+}
+
+#readyToSwitchPlayerButton{
+  font-weight: bold;
+  padding: 1em;
+  margin: 1em;
 }

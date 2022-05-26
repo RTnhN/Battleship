@@ -10,6 +10,12 @@ class DOM {
     this.title.id = "title";
     this.title.textContent = "BATTLESHIP";
 
+    this.togglePlayerEntryForm = document.createElement('button');
+    this.togglePlayerEntryForm.id = 'togglePlayerEntryForm';
+    this.togglePlayerEntryForm.textContent = 'Close Player Form';
+
+    this.playerEntryForm = this.makePlayerEntryForm();
+
     this.status = document.createElement('p');
     this.status.id = 'status';
     this.status.textContent = 'status';
@@ -75,17 +81,57 @@ class DOM {
 
     this.placeShipModal.appendChild(this.placeShipModalContainer);
 
+    this.switchPlayerModal = document.createElement('dialog');
+    this.switchPlayerModal.id = 'switchPlayerModal';
+
+    this.switchPlayerModalContainer = document.createElement('div');
+    this.switchPlayerModalContainer.id = 'switchPlayerModalContainer';
+
+    this.switchPlayerModalDescription = document.createElement('p');
+    this.switchPlayerModalDescription.id = 'switchPlayerModalDescription';
+    this.switchPlayerModalDescription.textContent = 'It is now the other player\'s turn. Switch players and hit the ready button below.';
+
+    this.readyToSwitchPlayerButton = document.createElement('button');
+    this.readyToSwitchPlayerButton.id = 'readyToSwitchPlayerButton';
+    this.readyToSwitchPlayerButton.textContent = 'Ready to Switch'; 
+
+    this.switchPlayerModalContainer.appendChild(this.switchPlayerModalDescription);
+    this.switchPlayerModalContainer.appendChild(this.readyToSwitchPlayerButton);
+
+    this.switchPlayerModal.appendChild(this.switchPlayerModalContainer);
+
+
     placeholder.appendChild(this.title);
+    placeholder.appendChild(this.togglePlayerEntryForm);
+    placeholder.appendChild(this.playerEntryForm);
     placeholder.appendChild(this.status);
     placeholder.appendChild(this.selfGridContainerTitle);
     placeholder.appendChild(this.selfGridContainer);
     placeholder.appendChild(this.enemyGridContainerTitle);
     placeholder.appendChild(this.enemyGridContainer);
     placeholder.appendChild(this.placeShipModal);
+    placeholder.appendChild(this.switchPlayerModal);
   
     contentNode.appendChild(placeholder);
 
-    this.placeShipModalCancelButton.addEventListener('click', () => this.placeShipModal.close())
+    this.placeShipModalCancelButton.addEventListener('click', () => this.placeShipModal.close());
+    this.readyToSwitchPlayerButton.addEventListener('click', () => this.switchPlayerModal.close());
+    this.togglePlayerEntryForm.addEventListener('click', ()=>{
+      if (this.playerEntryForm.style.display === ''){
+        this.closePlayerEntryForm();
+      } else {
+        this.openPlayerEntryForm();
+      }
+    });
+  }
+  closePlayerEntryForm(){
+    this.playerEntryForm.style.display = 'none';
+    this.togglePlayerEntryForm.textContent = 'Open Player Form';
+  }
+
+  openPlayerEntryForm(){
+    this.playerEntryForm.style.display = '';
+    this.togglePlayerEntryForm.textContent = 'Close Player Form';
   }
 
   static createGrid(parentElement, width, height = undefined) {
@@ -196,6 +242,70 @@ class DOM {
     DOM.clearPlaceShipModalRow(this.placeShipModalShipsContainerCountContainer)
     DOM.placeShipModalCreateRow(this.placeShipModalShipsContainerCountContainer, fleet, 'count')
   }
+
+  updatePlayerNamePlaceShipModal(playerName){
+    this.placeShipModalSubtitle.textContent = playerName + ' Ship Placement';
+  }
+
+  makePlayerEntryForm(){
+    const playerEntryForm = document.createElement('form');
+    playerEntryForm.id = 'playerEntryForm';
+
+    const player1Entry = this.makePlayerEntryFormOnePlayer('player1', 'Player 1')
+    const player2Entry = this.makePlayerEntryFormOnePlayer('player2', 'Player 2')
+
+    const submitButton = document.createElement('input');
+    submitButton.id = 'startButton';
+    submitButton.type = 'submit';
+    submitButton.value = 'start game';
+
+    playerEntryForm.appendChild(player1Entry);
+    playerEntryForm.appendChild(player2Entry);
+    playerEntryForm.appendChild(submitButton);
+
+    return playerEntryForm;
+  }
+
+  makePlayerEntryFormOnePlayer(playerName, playerNameFancy){
+    const placeholder = document.createDocumentFragment();
+
+    const playerNameLabel = document.createElement('label');
+    playerNameLabel.id = playerName+'NameLabel';
+    playerNameLabel.for = playerName+'Name';
+    playerNameLabel.textContent = playerNameFancy + ' name';
+
+    const playerNameInput = document.createElement('input');
+    playerNameInput.id = playerName+'Name';
+    playerNameInput.type = 'text';
+    playerNameInput.name = playerName+'Name';
+    playerNameInput.placeholder = playerNameFancy;
+    playerNameInput.value = playerNameFancy;
+    
+    const label = document.createElement('label');
+    label.id = playerName + 'TypeLabel';
+    label.for = playerName + 'Type';
+    label.textContent = playerNameFancy + ' type';
+
+    const type = document.createElement('select');
+    type.id = playerName + 'Type';
+    type.name = playerName + 'Type';
+
+    const typeHuman = document.createElement('option');
+    typeHuman.value = 'human';
+    typeHuman.textContent = 'Human';
+
+    const typeComputer = document.createElement('option');
+    typeComputer.value = 'computer';
+    typeComputer.textContent = 'Computer';
+    type.append(typeHuman, typeComputer);
+    placeholder.append(playerNameLabel, playerNameInput, label, type);
+    return placeholder;
+  }
+
+  updateSwitchPlayerModalWithPlayerName(player){
+    this.switchPlayerModalDescription.textContent = `It is now ${player.name} \'s turn. Switch players and hit the ready button below.`
+  }
+
 
   static placeShipModalCreateRow(node, fleet, type){
     node = DOM.clearPlaceShipModalRow(node);

@@ -14,11 +14,15 @@ class Game {
     this.currentPlayer;
     this.opposingPlayer; 
     this.DOM.placeShipModalResetButton.addEventListener('click', this.resetPlaceShip.bind(this));
-    this.start(); 
+    this.DOM.playerEntryForm.addEventListener('submit', this.start.bind(this));
   }
-  start(){
-    this.player1 = new Player('human', 'player 1');
-    this.player2 = new Player('computer', 'player 2');
+
+  start(event){
+    event.preventDefault();
+    const formData = new FormData(this.DOM.playerEntryForm);
+    this.DOM.closePlayerEntryForm();
+    this.player1 = new Player(formData.get('player1Type'), formData.get('player1Name'));
+    this.player2 = new Player(formData.get('player2Type'), formData.get('player2Name'));
     this.currentPlayer = Math.random() > .5 ? this.player1 : this.player2;
     this.opposingPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
     this.reset();
@@ -29,9 +33,17 @@ class Game {
     this.DOM.clearGrids();
   }
 
-  mainGameLoop(){
+  async mainGameLoop(){
     let attack;
-    this.DOM.updateDOMFromGameboard(this.player1.gameboard, this.player2.gameboard);
+    if (this.currentPlayer.type === 'human' && this.opposingPlayer.type === 'human'){
+      await this.delay(1500);
+      this.DOM.updateSwitchPlayerModalWithPlayerName(this.currentPlayer);
+      this.DOM.switchPlayerModal.showModal();
+    }
+    if (this.currentPlayer.type === 'computer' && this.opposingPlayer.type === 'computer'){
+      await this.delay(100);
+    }
+    this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
     this.DOM.status.textContent = this.currentPlayer.name;
     if (this.currentPlayer.type === 'human'){
       this.DOM.enemyGridContainer.addEventListener("click", this.executeAttack.bind(this), {once:true});
@@ -40,15 +52,14 @@ class Game {
       this.attackResult = this.opposingPlayer.gameboard.receiveAttack(attack);
       if (this.attackResult === "hit"){
         this.currentPlayer.attackHits.push(attack);
+        if (this.opposingPlayer.gameboard.allShipsSunk){
+          alert(this.currentPlayer.name + ' has won')
+          return;
+        }
       } else if (this.attackResult === 'miss'){
         this.currentPlayer.attackMisses.push(attack);
       }
-      this.DOM.updateDOMFromGameboard(this.player1.gameboard, this.player2.gameboard);
-      if (this.opposingPlayer.gameboard.allShipsSunk){
-        alert(this.currentPlayer.name + ' has won')
-        this.start();
-        return;
-      }
+      this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
       this.switchPlayers();
       this.mainGameLoop();
     }
@@ -65,14 +76,14 @@ class Game {
       this.currentPlayer.attackHits.push(coords);
       if (this.opposingPlayer.gameboard.allShipsSunk){
         alert(this.currentPlayer.name + ' has won')
-        this.start();
         return;
       }
+      this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
       this.switchPlayers();
     } else if (this.attackResult === 'miss'){
       this.currentPlayer.attackMisses.push(coords);
+      this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
       this.switchPlayers();
-    } else if (this.attackResult === "alreadyHit"){      
     }
     this.mainGameLoop()
 
@@ -93,6 +104,7 @@ class Game {
       DOM.clearGrid(this.DOM.placeShipModalGrid);
       this.fleetListClone = structuredClone(this.fleetList);
       this.DOM.updatePlaceShipModalRows(this.fleetListClone);
+      this.DOM.updatePlayerNamePlaceShipModal(this.currentPlayer.name);
       this.DOM.placeShipModal.showModal();
       this.controller = new AbortController();
       this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), {signal:this.controller.signal});
@@ -171,6 +183,7 @@ class Game {
     this.DOM.updatePlaceShipModalRows(this.fleetListClone);
     this.currentPlayer.gameboard.resetGameboard();
   }
+  delay = ms => new Promise(res => setTimeout(res, ms));
 }
 
 export default Game;
