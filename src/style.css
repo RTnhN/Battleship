@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
+
 * {
   margin: 0;
   padding: 0;
@@ -179,7 +180,7 @@ body{
   grid-template-rows: repeat(10, 1fr);
 }
 
-#selfGridContainer>div{
+.gameGridSquare{
   border: 1px solid black;
   width: 2rem;
   height: 2rem;
@@ -215,7 +216,7 @@ body{
   grid-template-rows: repeat(10, 1fr);
 }
 
-#enemyGridContainer>div{
+/* #enemyGridContainer>div{
   border: 1px solid black;
   width: 2rem;
   height: 2rem;
@@ -224,14 +225,19 @@ body{
   align-items: center;
   cursor: crosshair;
   font-size: 1rem;
-}
+} */
 
 .hit{
   background-color: var(--ship-color);
+  border:none;
 }
 
 .miss{
-  background-color: var(--water-color);
+  /* background-color: var(--water-color); */
+  background-image: url("../src/Assets/Images/water.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border:none;
 }
 
 #placeShipModal{

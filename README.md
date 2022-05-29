@@ -4,6 +4,7 @@ Battleship game
 
 Live Link: https://rtnhn.github.io/Battleship/
 
+Water tile: Photo by [Shaafi Ali](https://unsplash.com/photos/khkR-0UcgPw#:~:text=Photo%20by%20Shaafi%20Ali%20on%20Unsplash) on [unsplash](https://unsplash.com/photos/khkR-0UcgPw#:~:text=Photo%20by%20Shaafi%20Ali%20on%20Unsplash)
 
 cheat sheet:
 
@@ -19,4 +20,6 @@ prettier: npx prettier --write .
 prettier watch only: npx prettier --watch 
 
 git subtree push --prefix dist origin gh-pages
+
+
 

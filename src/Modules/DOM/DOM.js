@@ -27,7 +27,7 @@ class DOM {
     this.selfGridContainer = document.createElement('selfGridContainer');
     this.selfGridContainer.id = 'selfGridContainer';
 
-    DOM.createGrid(this.selfGridContainer, gridSize);
+    DOM.createGrid(this.selfGridContainer, 'gameGridSquare', gridSize);
 
     this.enemyGridContainerTitle = document.createElement('h2');
     this.enemyGridContainerTitle.id = 'enemyGridContainerTitle';
@@ -36,7 +36,7 @@ class DOM {
     this.enemyGridContainer = document.createElement('div');
     this.enemyGridContainer.id = 'enemyGridContainer';
 
-    DOM.createGrid(this.enemyGridContainer, gridSize);
+    DOM.createGrid(this.enemyGridContainer, 'gameGridSquare', gridSize);
 
     this.placeShipModal = document.createElement('dialog');
     this.placeShipModal.id = 'placeShipModal';
@@ -61,7 +61,7 @@ class DOM {
     this.placeShipModalGrid = document.createElement('div');
     this.placeShipModalGrid.id = 'placeShipModalGrid';
 
-    DOM.createGrid(this.placeShipModalGrid, gridSize)
+    DOM.createGrid(this.placeShipModalGrid, "placeShipGridSquare", gridSize)
 
     this.placeShipModalResetButton = document.createElement('button');
     this.placeShipModalResetButton.id = 'placeShipModalResetButton';
@@ -133,12 +133,13 @@ class DOM {
     this.togglePlayerEntryForm.textContent = 'Close Player Form';
   }
 
-  static createGrid(parentElement, width, height = undefined) {
+  static createGrid(parentElement,className, width, height = undefined) {
     const placeholder = document.createDocumentFragment();
     height = height === undefined ? width : height
     for (let row = 0; row < height; row++) {
       for (let col = 0; col < width; col++) {
         placeholder.appendChild(document.createElement('div'));
+        placeholder.lastChild.classList.add(className);
         placeholder.lastChild.id = `${parentElement.id},${col},${row}`;
       }
     }
@@ -190,7 +191,8 @@ class DOM {
   static clearGrid(gridContainer){
     Array.from(gridContainer.children)
       .forEach(cell => {
-        cell.className = '';
+        cell.classList.remove('miss');
+        cell.classList.remove('hit');
         cell.textContent = '';
       });
   }
