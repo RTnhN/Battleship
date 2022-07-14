@@ -10,6 +10,11 @@
   --water-color: hsl(240, 100%, 67%);
 }
 
+button, input[type="submit"]{
+  background: none;
+  border: 1px solid black;
+}
+
 body{
   display: flex;
   flex-direction: column;
