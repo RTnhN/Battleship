@@ -58,10 +58,6 @@ class DOM {
     this.placeShipModalContainer = document.createElement('div');
     this.placeShipModalContainer.id = 'placeShipModalContainer';
 
-    this.placeShipModalGameTitle = document.createElement('h1');
-    this.placeShipModalGameTitle.id = 'placeShipModalGameTitle';
-    this.placeShipModalGameTitle.textContent = 'BATTLESHIP';
-
     this.placeShipModalTitle = document.createElement('h2');
     this.placeShipModalTitle.id = 'placeShipModalTitle';
     this.placeShipModalTitle.textContent = 'Ship Placement';
@@ -85,7 +81,6 @@ class DOM {
     this.placeShipModalCancelButton.id = 'placeShipModalCancelButton';
     this.placeShipModalCancelButton.textContent = 'Cancel';
 
-    this.placeShipModalContainer.appendChild(this.placeShipModalGameTitle);
     this.placeShipModalContainer.appendChild(this.placeShipModalTitle);
     this.placeShipModalContainer.appendChild(this.placeShipModalSubtitle);
     this.placeShipModalContainer.appendChild(this.placeShipModalShipsContainer);
