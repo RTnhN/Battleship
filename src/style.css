@@ -256,7 +256,7 @@ body{
 
 #placeShipModalContainer{
   display: grid;
-  width: clamp(300px, 80vw, 600px);
+  width: clamp(300px, 80vw, 500px);
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, 1fr);
   grid-template-areas:
