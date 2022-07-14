@@ -30,8 +30,8 @@ body{
 
 #content{
   /* width: min(80vw, 500px); */
-  height: 100vh;
-  width:100vw;
+  min-height: 100vh;
+  width:100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -420,4 +420,11 @@ body{
   font-weight: bold;
   padding: 1em;
   margin: 1em;
+}
+
+@media screen and (max-width: 550px) {
+  #title{
+    font-size: 3rem;
+  }
+  
 }
