@@ -23,6 +23,7 @@ class Game {
     this.DOM.placeShipModalCancelButton.addEventListener('click', () => {
       this.DOM.placeShipModal.close();
       this.controller.abort();
+      this.startClick = null;
     });
   }
 
@@ -215,6 +216,7 @@ class Game {
     this.fleetListClone = structuredClone(this.fleetList);
     this.DOM.updatePlaceShipModalRows(this.fleetListClone);
     this.currentPlayer.gameboard.resetGameboard();
+    this.startClick = null;
   }
 
   // eslint-disable-next-line no-promise-executor-return
