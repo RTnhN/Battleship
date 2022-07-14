@@ -295,6 +295,7 @@ class DOM {
     playerNameInput.name = `${playerName}Name`;
     playerNameInput.placeholder = playerNameFancy;
     playerNameInput.value = playerNameFancy;
+    playerNameInput.required = true;
 
     const label = document.createElement('label');
     label.id = `${playerName}TypeLabel`;
