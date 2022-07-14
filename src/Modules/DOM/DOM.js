@@ -1,20 +1,21 @@
-import PointsHelper from "../Util/PointsHelper";
+/* eslint-disable no-plusplus */
+import PointsHelper from '../Util/PointsHelper';
 
 class DOM {
   constructor(contentNode, fleetList, gridSize = 10) {
     this.contentNode = contentNode;
     this.fleetList = fleetList;
-    const placeholder = document.createDocumentFragment()
+    const placeholder = document.createDocumentFragment();
 
     this.title = document.createElement('h1');
-    this.title.id = "title";
-    this.title.textContent = "BATTLESHIP";
+    this.title.id = 'title';
+    this.title.textContent = 'BATTLESHIP';
 
     this.togglePlayerEntryForm = document.createElement('button');
     this.togglePlayerEntryForm.id = 'togglePlayerEntryForm';
     this.togglePlayerEntryForm.textContent = 'Close Player Form';
 
-    this.playerEntryForm = this.makePlayerEntryForm();
+    this.playerEntryForm = DOM.makePlayerEntryForm();
 
     this.status = document.createElement('p');
     this.status.id = 'status';
@@ -32,7 +33,7 @@ class DOM {
 
     DOM.createGrid(this.selfGridContainer, 'gameGridSquare', gridSize);
 
-    this.selfGrid.append(this.selfGridContainerTitle, this.selfGridContainer)
+    this.selfGrid.append(this.selfGridContainerTitle, this.selfGridContainer);
 
     this.enemyGrid = document.createElement('div');
     this.enemyGrid.id = 'enemyGrid';
@@ -46,7 +47,7 @@ class DOM {
 
     DOM.createGrid(this.enemyGridContainer, 'gameGridSquare', gridSize);
 
-    this.enemyGrid.append(this.enemyGridContainerTitle, this.enemyGridContainer)
+    this.enemyGrid.append(this.enemyGridContainerTitle, this.enemyGridContainer);
 
     this.grids = document.createElement('div');
     this.grids.id = 'grids';
@@ -61,17 +62,17 @@ class DOM {
     this.placeShipModalTitle = document.createElement('h2');
     this.placeShipModalTitle.id = 'placeShipModalTitle';
     this.placeShipModalTitle.textContent = 'Ship Placement';
-    
+
     this.placeShipModalSubtitle = document.createElement('p');
     this.placeShipModalSubtitle.id = 'placeShipModalSubtitle';
     this.placeShipModalSubtitle.textContent = 'Click two grid squares to place a ship';
 
     this.makeShipModalShipsContainer();
-    
+
     this.placeShipModalGrid = document.createElement('div');
     this.placeShipModalGrid.id = 'placeShipModalGrid';
 
-    DOM.createGrid(this.placeShipModalGrid, "placeShipGridSquare", gridSize)
+    DOM.createGrid(this.placeShipModalGrid, 'placeShipGridSquare', gridSize);
 
     this.placeShipModalResetButton = document.createElement('button');
     this.placeShipModalResetButton.id = 'placeShipModalResetButton';
@@ -102,13 +103,12 @@ class DOM {
 
     this.readyToSwitchPlayerButton = document.createElement('button');
     this.readyToSwitchPlayerButton.id = 'readyToSwitchPlayerButton';
-    this.readyToSwitchPlayerButton.textContent = 'Ready to Switch'; 
+    this.readyToSwitchPlayerButton.textContent = 'Ready to Switch';
 
     this.switchPlayerModalContainer.appendChild(this.switchPlayerModalDescription);
     this.switchPlayerModalContainer.appendChild(this.readyToSwitchPlayerButton);
 
     this.switchPlayerModal.appendChild(this.switchPlayerModalContainer);
-
 
     placeholder.appendChild(this.title);
     placeholder.appendChild(this.togglePlayerEntryForm);
@@ -117,32 +117,32 @@ class DOM {
     placeholder.appendChild(this.grids);
     placeholder.appendChild(this.placeShipModal);
     placeholder.appendChild(this.switchPlayerModal);
-  
     contentNode.appendChild(placeholder);
 
     this.readyToSwitchPlayerButton.addEventListener('click', () => this.switchPlayerModal.close());
-    this.togglePlayerEntryForm.addEventListener('click', ()=>{
-      if (this.playerEntryForm.style.display === ''){
+    this.togglePlayerEntryForm.addEventListener('click', () => {
+      if (this.playerEntryForm.style.display === '') {
         this.closePlayerEntryForm();
       } else {
         this.openPlayerEntryForm();
       }
     });
   }
-  closePlayerEntryForm(){
+
+  closePlayerEntryForm() {
     this.playerEntryForm.style.display = 'none';
     this.togglePlayerEntryForm.textContent = 'Open Player Form';
   }
 
-  openPlayerEntryForm(){
+  openPlayerEntryForm() {
     this.playerEntryForm.style.display = '';
     this.togglePlayerEntryForm.textContent = 'Close Player Form';
   }
 
-  static createGrid(parentElement,className, width, height = undefined) {
+  static createGrid(parentElement, className, width, height = undefined) {
     const placeholder = document.createDocumentFragment();
-    height = height === undefined ? width : height
-    for (let row = 0; row < height; row++) {
+    const heightParam = height === undefined ? width : height;
+    for (let row = 0; row < heightParam; row++) {
       for (let col = 0; col < width; col++) {
         placeholder.appendChild(document.createElement('div'));
         placeholder.lastChild.classList.add(className);
@@ -159,50 +159,57 @@ class DOM {
     }
   }
 
-  updateDOMFromGameboard(selfGameboard, enemyGameboard){
+  updateDOMFromGameboard(selfGameboard, enemyGameboard) {
     this.clearGrids();
-    selfGameboard.cellsWithShips.forEach(ship => 
-      document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,ship)).classList.add('coloredShip')
-      );
-    selfGameboard.hits.forEach(hit => {
-      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,hit));
+    selfGameboard.cellsWithShips
+      .forEach((ship) => document
+        .getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer, ship))
+        .classList.add('coloredShip'));
+    selfGameboard.hits.forEach((hit) => {
+      const element = document
+        .getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer, hit));
       element.classList.add('hit');
     });
-    selfGameboard.misses.forEach(miss => {
-      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,miss));
+    selfGameboard.misses.forEach((miss) => {
+      const element = document
+        .getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer, miss));
       element.classList.add('miss');
     });
-    enemyGameboard.hits.forEach(hit => {
-      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,hit));
+    enemyGameboard.hits.forEach((hit) => {
+      const element = document
+        .getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer, hit));
       element.classList.add('hit');
     });
-    enemyGameboard.misses.forEach(miss => {
-      const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,miss));
+    enemyGameboard.misses.forEach((miss) => {
+      const element = document
+        .getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer, miss));
       element.classList.add('miss');
     });
   }
 
-  static paintShipLocation(gridContainer, coords){
+  static paintShipLocation(gridContainer, coords) {
     const points = PointsHelper.returnPointsBetweenCoords(coords);
-    const pointsFormatted = points.map(point => `${gridContainer.id},${point.x},${point.y}`)
-    pointsFormatted.forEach(points => document.getElementById(points).classList.add('coloredShip'))
+    const pointsFormatted = points.map((point) => `${gridContainer.id},${point.x},${point.y}`);
+    pointsFormatted.forEach((pointsPair) => document.getElementById(pointsPair).classList.add('coloredShip'));
   }
-  clearGrids(){
+
+  clearGrids() {
     DOM.clearGrid(this.enemyGridContainer);
     DOM.clearGrid(this.selfGridContainer);
   }
 
-  static clearGrid(gridContainer){
+  static clearGrid(gridContainer) {
     Array.from(gridContainer.children)
-      .forEach(cell => {
+      .forEach((cell) => {
         cell.classList.remove('miss');
         cell.classList.remove('hit');
         cell.classList.remove('coloredShip');
+        // eslint-disable-next-line no-param-reassign
         cell.textContent = '';
       });
   }
 
-  makeShipModalShipsContainer(){
+  makeShipModalShipsContainer() {
     this.placeShipModalShipsContainer = document.createElement('div');
     this.placeShipModalShipsContainer.id = 'placeShipModalShipsContainer';
 
@@ -242,23 +249,23 @@ class DOM {
     this.placeShipModalShipsContainer.appendChild(this.placeShipModalShipsContainerCountContainer);
   }
 
-  updatePlaceShipModalRows(fleet){
-    DOM.clearPlaceShipModalRow(this.placeShipModalShipsContainerSizeContainer)
-    DOM.placeShipModalCreateRow(this.placeShipModalShipsContainerSizeContainer, fleet, 'size')
-    DOM.clearPlaceShipModalRow(this.placeShipModalShipsContainerCountContainer)
-    DOM.placeShipModalCreateRow(this.placeShipModalShipsContainerCountContainer, fleet, 'count')
+  updatePlaceShipModalRows(fleet) {
+    DOM.clearPlaceShipModalRow(this.placeShipModalShipsContainerSizeContainer);
+    DOM.placeShipModalCreateRow(this.placeShipModalShipsContainerSizeContainer, fleet, 'size');
+    DOM.clearPlaceShipModalRow(this.placeShipModalShipsContainerCountContainer);
+    DOM.placeShipModalCreateRow(this.placeShipModalShipsContainerCountContainer, fleet, 'count');
   }
 
-  updatePlayerNamePlaceShipModal(playerName){
-    this.placeShipModalTitle.textContent = playerName + ' Ship Placement';
+  updatePlayerNamePlaceShipModal(playerName) {
+    this.placeShipModalTitle.textContent = `${playerName} Ship Placement`;
   }
 
-  makePlayerEntryForm(){
+  static makePlayerEntryForm() {
     const playerEntryForm = document.createElement('form');
     playerEntryForm.id = 'playerEntryForm';
 
-    const player1Entry = this.makePlayerEntryFormOnePlayer('player1', 'Player 1')
-    const player2Entry = this.makePlayerEntryFormOnePlayer('player2', 'Player 2')
+    const player1Entry = DOM.makePlayerEntryFormOnePlayer('player1', 'Player 1');
+    const player2Entry = DOM.makePlayerEntryFormOnePlayer('player2', 'Player 2');
 
     const submitButton = document.createElement('input');
     submitButton.id = 'startButton';
@@ -272,29 +279,29 @@ class DOM {
     return playerEntryForm;
   }
 
-  makePlayerEntryFormOnePlayer(playerName, playerNameFancy){
+  static makePlayerEntryFormOnePlayer(playerName, playerNameFancy) {
     const placeholder = document.createDocumentFragment();
 
     const playerNameLabel = document.createElement('label');
-    playerNameLabel.id = playerName+'NameLabel';
-    playerNameLabel.for = playerName+'Name';
-    playerNameLabel.textContent = playerNameFancy + ' name';
+    playerNameLabel.id = `${playerName}NameLabel`;
+    playerNameLabel.for = `${playerName}Name`;
+    playerNameLabel.textContent = `${playerNameFancy} name`;
 
     const playerNameInput = document.createElement('input');
-    playerNameInput.id = playerName+'Name';
+    playerNameInput.id = `${playerName}Name`;
     playerNameInput.type = 'text';
-    playerNameInput.name = playerName+'Name';
+    playerNameInput.name = `${playerName}Name`;
     playerNameInput.placeholder = playerNameFancy;
     playerNameInput.value = playerNameFancy;
-    
+
     const label = document.createElement('label');
-    label.id = playerName + 'TypeLabel';
-    label.for = playerName + 'Type';
-    label.textContent = playerNameFancy + ' type';
+    label.id = `${playerName}TypeLabel`;
+    label.for = `${playerName}Type`;
+    label.textContent = `${playerNameFancy} type`;
 
     const type = document.createElement('select');
-    type.id = playerName + 'Type';
-    type.name = playerName + 'Type';
+    type.id = `${playerName}Type`;
+    type.name = `${playerName}Type`;
 
     const typeHuman = document.createElement('option');
     typeHuman.value = 'human';
@@ -308,25 +315,24 @@ class DOM {
     return placeholder;
   }
 
-  updateSwitchPlayerModalWithPlayerName(player){
-    this.switchPlayerModalDescription.textContent = `It is now ${player.name} \'s turn. Switch players and hit the ready button below.`
+  updateSwitchPlayerModalWithPlayerName(player) {
+    this.switchPlayerModalDescription.textContent = `It is now ${player.name}'s turn. Switch players and hit the ready button below.`;
   }
 
-
-  static placeShipModalCreateRow(node, fleet, type){
-    node = DOM.clearPlaceShipModalRow(node);
+  static placeShipModalCreateRow(node, fleet, type) {
+    const nodeCleared = DOM.clearPlaceShipModalRow(node);
     fleet.forEach((element, index) => {
       const ship = document.createElement('p');
       ship.id = `placeShipModal${type}${index}`;
       ship.classList.add(`placeShipModal_${type}`);
       ship.textContent = element[type];
-      node.appendChild(ship);
-    })
+      nodeCleared.appendChild(ship);
+    });
     return node;
   }
 
-  static clearPlaceShipModalRow(node){
-    while(node.firstChild){
+  static clearPlaceShipModalRow(node) {
+    while (node.firstChild) {
       node.removeChild(node.firstChild);
     }
     return node;

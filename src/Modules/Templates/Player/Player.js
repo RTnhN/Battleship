@@ -1,6 +1,7 @@
-import Gameboard from "../Gameboard/Gameboard";
-import _ from "lodash";
-import PointsHelper from "../../Util/PointsHelper";
+/* eslint-disable no-plusplus */
+import _ from 'lodash';
+import Gameboard from '../Gameboard/Gameboard';
+import PointsHelper from '../../Util/PointsHelper';
 
 class Player {
   constructor(type, name) {
@@ -10,28 +11,22 @@ class Player {
     this.attackHits = [];
     this.attackMisses = [];
     this.setup = false;
-    if (type === "computer") {
+    if (type === 'computer') {
       this.attack = this.computerAttack;
-    } else if (type === 'human') {
-      this.attack = this.humanAttack;
     }
-  }
-
-  humanAttack(event) {
-    const point = PointsHelper.DOMStringToObject(event.target.id)
-    return
   }
 
   computerAttack() {
-    let attack = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE-1);
-    while (this.attacks.some(v => _.isEqual(attack, v))) {
-      attack = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE-1);
+    let attack = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE - 1);
+    // eslint-disable-next-line no-loop-func
+    while (this.attacks.some((v) => _.isEqual(attack, v))) {
+      attack = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE - 1);
     }
-    return attack
+    return attack;
   }
 
   randomPlaceShips(fleet) {
-    fleet.forEach(this.randomPlaceShip.bind(this))
+    fleet.forEach(this.randomPlaceShip.bind(this));
   }
 
   randomPlaceShip(ship) {
@@ -40,8 +35,8 @@ class Player {
     let invalid = true;
     for (let shipInstance = 0; shipInstance < ship.count; shipInstance++) {
       while (invalid) {
-        firstPoint = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE-1);
-        secondPoint = this.generateRandomValidSecondPoint(firstPoint, ship.size)
+        firstPoint = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE - 1);
+        secondPoint = this.generateRandomValidSecondPoint(firstPoint, ship.size);
         if (!this.newShipAndOldShipsOverlap(firstPoint, secondPoint)) {
           invalid = false;
         }
@@ -54,24 +49,31 @@ class Player {
   generateRandomValidSecondPoint(point, size) {
     const points = [];
     const boardSize = this.gameboard.BOARD_SIZE;
-    points.push({ 'x': (point.x + size - 1), 'y': point.y })
-    points.push({ 'x': (point.x - size + 1), 'y': point.y })
-    points.push({ 'x': (point.x), 'y': point.y + size - 1 })
-    points.push({ 'x': (point.x), 'y': point.y - size + 1 })
-    const validPoints = points.filter(point => (point.x < boardSize && point.x >= 0 && point.y < boardSize && point.y >= 0))
-    return _.sample(validPoints)
+    points.push({ x: (point.x + size - 1), y: point.y });
+    points.push({ x: (point.x - size + 1), y: point.y });
+    points.push({ x: (point.x), y: point.y + size - 1 });
+    points.push({ x: (point.x), y: point.y - size + 1 });
+    const validPoints = points
+      .filter((pointi) => (pointi.x < boardSize
+          && pointi.x >= 0
+          && pointi.y < boardSize
+          && pointi.y >= 0));
+    return _.sample(validPoints);
   }
 
   newShipAndOldShipsOverlap(firstPoint, secondPoint) {
-    return this.gameboard.shipsCoords.some(shipCoord =>
-      PointsHelper.doLineSegmentsIntersect(firstPoint, secondPoint, ...PointsHelper.breakApartShipPoints(shipCoord))
-    )
+    return this.gameboard.shipsCoords
+      .some((shipCoord) => PointsHelper
+        .doLineSegmentsIntersect(
+          firstPoint,
+          secondPoint,
+          ...PointsHelper.breakApartShipPoints(shipCoord),
+        ));
   }
 
-  get attacks(){
+  get attacks() {
     return this.attackHits.concat(this.attackMisses);
   }
-
 }
 
 export default Player;

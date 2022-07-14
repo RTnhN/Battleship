@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Gameboard from "./Gameboard.js"
 
 let gameboard;

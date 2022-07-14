@@ -3,21 +3,20 @@ class Ship {
     this.length = length;
     this.damageArray = Array(length).fill(false);
   }
-  hit(section) {
-    if (section  >= 0 && section <= this.length - 1 ){
-      if (this.damageArray[section]){
-        return false
-      } else {
-        this.damageArray[section] = true;
-        return true
-      }
-    } else {
-      throw new RangeError("The hit was outside of the ship length. This function should not be called on this ship. ");
-    }
 
+  hit(section) {
+    if (section >= 0 && section <= this.length - 1) {
+      if (this.damageArray[section]) {
+        return false;
+      }
+      this.damageArray[section] = true;
+      return true;
+    }
+    throw new RangeError('The hit was outside of the ship length. This function should not be called on this ship. ');
   }
+
   get sunk() {
-    return this.damageArray.every(element => element === true);
+    return this.damageArray.every((element) => element === true);
   }
 }
 
