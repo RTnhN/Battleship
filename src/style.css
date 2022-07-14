@@ -15,6 +15,10 @@ button, input[type="submit"]{
   border: 1px solid black;
 }
 
+button:hover, input[type="submit"]:hover{
+  background-color: hsl(100, 0%, 90%);
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -222,6 +226,10 @@ body{
   grid-template-rows: repeat(10, 1fr);
 }
 
+#enemyGridContainer>div:hover{
+  background-color: red;
+}
+
 /* #enemyGridContainer>div{
   border: 1px solid black;
   width: 2rem;
@@ -359,6 +367,10 @@ body{
   justify-content: center;
   align-items: center;
   cursor: crosshair;
+}
+
+.placeShipGridsHover:hover{
+  background-color: var(--ship-color);
 }
 
 #placeShipModalResetButton{

@@ -211,6 +211,20 @@ class DOM {
       });
   }
 
+  static addClassToGridCell(gridContainer, className) {
+    Array.from(gridContainer.children)
+      .forEach((cell) => {
+        cell.classList.add(className);
+      });
+  }
+
+  static removeClassFromGridCell(gridContainer, className) {
+    Array.from(gridContainer.children)
+      .forEach((cell) => {
+        cell.classList.remove(className);
+      });
+  }
+
   makeShipModalShipsContainer() {
     this.placeShipModalShipsContainer = document.createElement('div');
     this.placeShipModalShipsContainer.id = 'placeShipModalShipsContainer';

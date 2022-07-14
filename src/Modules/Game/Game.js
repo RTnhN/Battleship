@@ -59,6 +59,7 @@ class Game {
       this.DOM.updatePlayerNamePlaceShipModal(this.currentPlayer.name);
       this.DOM.placeShipModal.showModal();
       this.controller = new AbortController();
+      DOM.addClassToGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
       this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), { signal: this.controller.signal });
       this.DOM.placeShipModalGrid.addEventListener('mousemove', this.hoverPlaceShipModal.bind(this), { signal: this.controller.signal });
     }
@@ -149,6 +150,7 @@ class Game {
       this.startClick = PointsHelper.DOMStringToObject(event.target.id);
       this.startClickElement = event.target;
       this.startClickElement.classList.add('coloredShip');
+      DOM.removeClassFromGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
     } else {
       this.endClick = PointsHelper.DOMStringToObject(event.target.id);
       const straightCoords = PointsHelper.makeCoordsStraight(this.startClick, this.endClick);
@@ -183,6 +185,7 @@ class Game {
       }
       this.startClick = null;
       this.endClick = null;
+      DOM.addClassToGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
     }
   }
 
