@@ -9,7 +9,7 @@
 }
 
 :root{
-  --ship-color:  hsl(0, 0%, 50%);
+  --ship-color:  hsl(100, 1%, 57%);
   --water-color: hsl(240, 100%, 67%);
 }
 
@@ -229,6 +229,9 @@ body{
 
 .hit{
   background-color: var(--ship-color);
+  background-image: url("../src/Assets/Images/fire.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
   border:none;
 }
 

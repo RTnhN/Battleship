@@ -161,7 +161,6 @@ class DOM {
     selfGameboard.hits.forEach(hit => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,hit));
       element.classList.add('hit');
-      element.textContent = '🔥';
     });
     selfGameboard.misses.forEach(miss => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.selfGridContainer,miss));
@@ -170,7 +169,6 @@ class DOM {
     enemyGameboard.hits.forEach(hit => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,hit));
       element.classList.add('hit');
-      element.textContent = '🔥';
     });
     enemyGameboard.misses.forEach(miss => {
       const element = document.getElementById(PointsHelper.ObjectToDOMString(this.enemyGridContainer,miss));
@@ -193,6 +191,7 @@ class DOM {
       .forEach(cell => {
         cell.classList.remove('miss');
         cell.classList.remove('hit');
+        cell.classList.remove('coloredShip');
         cell.textContent = '';
       });
   }
