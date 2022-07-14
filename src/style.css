@@ -25,19 +25,10 @@ body{
 #content{
   /* width: min(80vw, 500px); */
   height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: 
-    'title title'
-    'togglePlayerForm togglePlayerForm'
-    'playerForm playerForm'
-    'status status'
-    'selfGridTitle selfGridTitle'
-    'selfGrid selfGrid'
-    'enemyGridTitle enemyGridTitle'
-    'enemyGrid enemyGrid'
-    ;
+  width:100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* title */
@@ -55,7 +46,6 @@ body{
 /* toggle player form */
 
 #togglePlayerEntryForm{
-  grid-area: togglePlayerForm;
   align-self: center;
   justify-self: center;
   text-align: center;
@@ -64,7 +54,6 @@ body{
 }
 
 #playerEntryForm{
-  grid-area: playerForm;
   align-self: center;
   justify-self: center;
   text-align: center;
@@ -150,30 +139,41 @@ body{
 /* status */
 
 #status{
-  grid-area: status;
   align-self: center;
   justify-self: center;
+  margin-top:1rem;
 }
 
-/* Self Grid Container Title */
+/* Grids */
+
+#grids{
+  width:min(80vw, 1000px);
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap:2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Self Grid Container */
+
+#selfGrid{
+  flex:1 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 #selfGridContainerTitle{
-  grid-area: selfGridTitle;
-  align-self: center;
-  justify-self: center;
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
   padding: 0.5em;
 }
 
-/* Self Grid Container */
-
 #selfGridContainer{
-  grid-area: selfGrid;
-  align-self: center;
-  justify-self: center;
-  width: 100%;
+  width:100%;
   aspect-ratio: 1 / 1;
   display:grid;
   grid-template-columns: repeat(10, 1fr);
@@ -182,24 +182,26 @@ body{
 
 .gameGridSquare{
   border: 1px solid black;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+  min-width: 2rem;
+  min-height: 2rem;
+
 }
 
 .coloredShip{
   background-color: var(--ship-color);
+  border: 1px solid black;
 }
 
 /* Enemy Grid Container */
 
+#enemyGrid{
+  flex:1 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #enemyGridContainerTitle{
-  grid-area: enemyGridTitle;
-  align-self: center;
-  justify-self: center;
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
@@ -207,10 +209,8 @@ body{
 }
 
 #enemyGridContainer{
-  grid-area: enemyGrid;
-  align-self: center;
-  justify-self: center;
-  width: 100%;
+  width:100%;
+  aspect-ratio: 1 / 1;
   display:grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);

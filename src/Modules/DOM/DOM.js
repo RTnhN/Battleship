@@ -20,14 +20,22 @@ class DOM {
     this.status.id = 'status';
     this.status.textContent = 'status';
 
+    this.selfGrid = document.createElement('div');
+    this.selfGrid.id = 'selfGrid';
+
     this.selfGridContainerTitle = document.createElement('h2');
     this.selfGridContainerTitle.id = 'selfGridContainerTitle';
     this.selfGridContainerTitle.textContent = 'Your Grid';
 
-    this.selfGridContainer = document.createElement('selfGridContainer');
+    this.selfGridContainer = document.createElement('div');
     this.selfGridContainer.id = 'selfGridContainer';
 
     DOM.createGrid(this.selfGridContainer, 'gameGridSquare', gridSize);
+
+    this.selfGrid.append(this.selfGridContainerTitle, this.selfGridContainer)
+
+    this.enemyGrid = document.createElement('div');
+    this.enemyGrid.id = 'enemyGrid';
 
     this.enemyGridContainerTitle = document.createElement('h2');
     this.enemyGridContainerTitle.id = 'enemyGridContainerTitle';
@@ -37,6 +45,12 @@ class DOM {
     this.enemyGridContainer.id = 'enemyGridContainer';
 
     DOM.createGrid(this.enemyGridContainer, 'gameGridSquare', gridSize);
+
+    this.enemyGrid.append(this.enemyGridContainerTitle, this.enemyGridContainer)
+
+    this.grids = document.createElement('div');
+    this.grids.id = 'grids';
+    this.grids.append(this.selfGrid, this.enemyGrid);
 
     this.placeShipModal = document.createElement('dialog');
     this.placeShipModal.id = 'placeShipModal';
@@ -105,10 +119,7 @@ class DOM {
     placeholder.appendChild(this.togglePlayerEntryForm);
     placeholder.appendChild(this.playerEntryForm);
     placeholder.appendChild(this.status);
-    placeholder.appendChild(this.selfGridContainerTitle);
-    placeholder.appendChild(this.selfGridContainer);
-    placeholder.appendChild(this.enemyGridContainerTitle);
-    placeholder.appendChild(this.enemyGridContainer);
+    placeholder.appendChild(this.grids);
     placeholder.appendChild(this.placeShipModal);
     placeholder.appendChild(this.switchPlayerModal);
   
