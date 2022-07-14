@@ -57,6 +57,7 @@ class Game {
       if (this.attackResult === "hit"){
         this.currentPlayer.attackHits.push(attack);
         if (this.opposingPlayer.gameboard.allShipsSunk){
+          this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
           alert(this.currentPlayer.name + ' has won')
           return;
         }
@@ -78,11 +79,11 @@ class Game {
     this.attackResult = this.opposingPlayer.gameboard.receiveAttack(coords);
     if (this.attackResult === "hit"){
       this.currentPlayer.attackHits.push(coords);
+      this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
       if (this.opposingPlayer.gameboard.allShipsSunk){
         alert(this.currentPlayer.name + ' has won')
         return;
       }
-      this.DOM.updateDOMFromGameboard(this.currentPlayer.gameboard, this.opposingPlayer.gameboard);
       this.switchPlayers();
     } else if (this.attackResult === 'miss'){
       this.currentPlayer.attackMisses.push(coords);
