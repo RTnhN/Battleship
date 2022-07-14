@@ -242,6 +242,10 @@ body{
   background-size: cover;
   border:none;
 }
+.hit.coloredShip{
+  border: 1px solid black;
+}
+
 
 #placeShipModal{
   position: absolute;
