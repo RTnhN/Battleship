@@ -54,6 +54,16 @@ class PointsHelper {
     return XYShipLen.dy < XYShipLen.dx ? XYShipLen.dx : XYShipLen.dy;
   }
 
+  static pointsEqual(point1, point2) {
+    return (point1.x === point2.x && point1.y === point2.y);
+  }
+
+  static pointSetDiff(points, excPoints) {
+    const excPointsArray = Array.isArray(excPoints) ? excPoints : [excPoints];
+    return points.filter((point) => excPointsArray
+      .every(((excPoint) => !_.isEqual(excPoint, point))));
+  }
+
   static makeCoordsStraight(start, end) {
     const distances = this.getXYShipLen(start, end);
     if (distances.dy > distances.dx) {
