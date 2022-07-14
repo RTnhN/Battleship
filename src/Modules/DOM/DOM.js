@@ -187,10 +187,12 @@ class DOM {
     });
   }
 
-  static paintShipLocation(gridContainer, coords) {
-    const points = PointsHelper.returnPointsBetweenCoords(coords);
-    const pointsFormatted = points.map((point) => `${gridContainer.id},${point.x},${point.y}`);
-    pointsFormatted.forEach((pointsPair) => document.getElementById(pointsPair).classList.add('coloredShip'));
+  static paintShipLocation(gridContainer, gameboard) {
+    DOM.clearGrid(gridContainer);
+    gameboard.cellsWithShips
+      .forEach((ship) => document
+        .getElementById(PointsHelper.ObjectToDOMString(gridContainer, ship))
+        .classList.add('coloredShip'));
   }
 
   clearGrids() {
@@ -317,6 +319,13 @@ class DOM {
 
   updateSwitchPlayerModalWithPlayerName(player) {
     this.switchPlayerModalDescription.textContent = `It is now ${player.name}'s turn. Switch players and hit the ready button below.`;
+  }
+
+  colorPlaceShipLocations(points) {
+    points
+      .forEach((point) => document
+        .getElementById(PointsHelper.ObjectToDOMString(this.placeShipModalGrid, point))
+        .classList.add('coloredShip'));
   }
 
   static placeShipModalCreateRow(node, fleet, type) {

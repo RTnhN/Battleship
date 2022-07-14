@@ -12,6 +12,7 @@ class Game {
       { size: 2, count: 4 }];
     this.startClick = null;
     this.endClick = null;
+    this.tempShipCoords = null;
     this.startClickElement = null;
     this.contentElement = contentElement;
     this.DOM = new DOM(contentElement, this.fleetList);
@@ -59,6 +60,7 @@ class Game {
       this.DOM.placeShipModal.showModal();
       this.controller = new AbortController();
       this.DOM.placeShipModalGrid.addEventListener('click', this.placeShipModalGridClicked.bind(this), { signal: this.controller.signal });
+      this.DOM.placeShipModalGrid.addEventListener('mousemove', this.hoverPlaceShipModal.bind(this), { signal: this.controller.signal });
     }
   }
 
@@ -119,6 +121,26 @@ class Game {
     this.mainGameLoop();
   }
 
+  hoverPlaceShipModal(event) {
+    if (event.target === event.currentTarget) {
+      return;
+    }
+    const targetCoords = PointsHelper.DOMStringToObject(event.target.id);
+    if (this.startClick === null || PointsHelper.pointsEqual(this.startClick, targetCoords)) {
+      return;
+    }
+    const shipLen = PointsHelper.getShipLen(this.startClick, targetCoords);
+    DOM.paintShipLocation(this.DOM.placeShipModalGrid, this.currentPlayer.gameboard);
+    if (PointsHelper.makeCoordsStraight(this.startClick, targetCoords) !== null) {
+      if (this.fleetListClone.some((ship) => ship.size === shipLen)) {
+        this.tempShipCoords = PointsHelper.pointSetDiff(PointsHelper
+          .returnPointsBetweenCoords(PointsHelper
+            .makeCoordsStraight(this.startClick, targetCoords)), this.startClick);
+        this.DOM.colorPlaceShipLocations(this.tempShipCoords);
+      }
+    }
+  }
+
   placeShipModalGridClicked(event) {
     if (event.target === event.currentTarget) {
       return;
@@ -147,7 +169,7 @@ class Game {
         return;
       }
       this.currentPlayer.gameboard.placeShip(straightCoords);
-      DOM.paintShipLocation(this.DOM.placeShipModalGrid, straightCoords);
+      DOM.paintShipLocation(this.DOM.placeShipModalGrid, this.currentPlayer.gameboard);
       this.DOM.updatePlaceShipModalRows(this.fleetListClone);
       if (removeShipFromFleetStatus === 'all ships placed') {
         this.currentPlayer.setup = true;
