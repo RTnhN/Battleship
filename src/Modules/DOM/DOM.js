@@ -225,6 +225,11 @@ class DOM {
       });
   }
 
+  static removeIndividualClassFromCell(gridContainer, coord, className) {
+    document.getElementById(PointsHelper.ObjectToDOMString(gridContainer, coord))
+      .classList.remove(className);
+  }
+
   makeShipModalShipsContainer() {
     this.placeShipModalShipsContainer = document.createElement('div');
     this.placeShipModalShipsContainer.id = 'placeShipModalShipsContainer';
