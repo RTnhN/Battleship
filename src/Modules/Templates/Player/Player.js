@@ -87,15 +87,6 @@ class Player {
     return _.sample(validPoints);
   }
 
-  newShipAndOldShipsOverlap(firstPoint, secondPoint) {
-    return PointsHelper.uniquePoints(this.gameboard.shipsCoords, this.gameboard.shipBufferCells)
-      .some((shipCoord) => PointsHelper
-        .doLineSegmentsIntersect(
-          firstPoint,
-          secondPoint,
-          ...PointsHelper.breakApartShipPoints(shipCoord),
-        ));
-  }
 
   get attacks() {
     return this.attackHits.concat(this.attackMisses);
