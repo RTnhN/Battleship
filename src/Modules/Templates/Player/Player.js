@@ -26,24 +26,50 @@ class Player {
   }
 
   randomPlaceShips(fleet) {
-    fleet.forEach(this.randomPlaceShip.bind(this));
+    let fleetTries = 0;
+    const FLEET_TRIES_MAX = 10;
+    let fleetStatus = [];
+    fleetStatus = fleet.map(this.randomPlaceShip.bind(this));
+    while (fleetStatus.some((ship) => ship === false)) {
+      fleetTries += 1;
+      this.gameboard.resetGameboard();
+      fleetStatus = fleet.map(this.randomPlaceShip.bind(this));
+      if (fleetTries > FLEET_TRIES_MAX) {
+        throw (Error('There is a problem with placement of random ships.'));
+      }
+    }
   }
 
-  randomPlaceShip(ship) {
+  randomPlaceShip(shipKind) {
+    let tries = 0;
+    const MAX_TRIES = 10;
     let firstPoint;
     let secondPoint;
+    let shipCoords;
     let invalid = true;
-    for (let shipInstance = 0; shipInstance < ship.count; shipInstance++) {
+    for (let shipInstance = 0; shipInstance < shipKind.count; shipInstance++) {
       while (invalid) {
         firstPoint = PointsHelper.randomPointGenerator(0, this.gameboard.BOARD_SIZE - 1);
-        secondPoint = this.generateRandomValidSecondPoint(firstPoint, ship.size);
-        if (!this.newShipAndOldShipsOverlap(firstPoint, secondPoint)) {
+        secondPoint = this.generateRandomValidSecondPoint(firstPoint, shipKind.size);
+        shipCoords = PointsHelper
+          .returnPointsBetweenCoords(PointsHelper.combineShipPoints(firstPoint, secondPoint));
+        if (PointsHelper.pointSetIntersection(
+          shipCoords,
+          this.gameboard.occupiedCells,
+        ).length === 0) {
           invalid = false;
+        } else {
+          tries += 1;
+          if (tries > MAX_TRIES) {
+            return false;
+          }
         }
       }
+      tries = 0;
       this.gameboard.placeShip(PointsHelper.combineShipPoints(firstPoint, secondPoint));
       invalid = true;
     }
+    return true;
   }
 
   generateRandomValidSecondPoint(point, size) {
@@ -62,7 +88,7 @@ class Player {
   }
 
   newShipAndOldShipsOverlap(firstPoint, secondPoint) {
-    return this.gameboard.shipsCoords
+    return PointsHelper.uniquePoints(this.gameboard.shipsCoords, this.gameboard.shipBufferCells)
       .some((shipCoord) => PointsHelper
         .doLineSegmentsIntersect(
           firstPoint,

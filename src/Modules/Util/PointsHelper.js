@@ -90,6 +90,28 @@ class PointsHelper {
     }
     return null;
   }
+
+  static bufferFromShip(ship, boardSize) {
+    const bufferPoints = [];
+    PointsHelper.returnPointsBetweenCoords(ship)
+      .forEach((point) => {
+        bufferPoints.push({ x: (point.x - 1), y: point.y });
+        bufferPoints.push({ x: (point.x + 1), y: point.y });
+        bufferPoints.push({ x: (point.x), y: point.y - 1 });
+        bufferPoints.push({ x: (point.x), y: point.y + 1 });
+      });
+    const validBufferPoints = bufferPoints
+      .filter((pointi) => (pointi.x < boardSize
+        && pointi.x >= 0
+        && pointi.y < boardSize
+        && pointi.y >= 0));
+    return PointsHelper
+      .pointSetDiff(
+        PointsHelper.uniquePoints(validBufferPoints),
+        PointsHelper.returnPointsBetweenCoords(ship),
+      );
+  }
+
   /* eslint-disable */
   /*  I included this in this page with the author's name and other comments since this was
       not a standard package or anything.

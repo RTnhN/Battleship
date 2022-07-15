@@ -9,6 +9,7 @@ class Gameboard {
     this.ships = [];
     this.shipsCoords = [];
     this.cellsWithShips = [];
+    this.shipBufferCells = [];
     this.hits = [];
     this.misses = [];
   }
@@ -30,6 +31,10 @@ class Gameboard {
         shipGridIndex: index,
       };
     });
+    this.shipBufferCells = PointsHelper.pointSetUnion(
+      this.shipBufferCells,
+      PointsHelper.bufferFromShip(coords, this.BOARD_SIZE),
+    );
     this.cellsWithShips = this.cellsWithShips.concat(points);
   }
 
@@ -53,12 +58,17 @@ class Gameboard {
     this.ships = [];
     this.shipsCoords = [];
     this.cellsWithShips = [];
+    this.shipBufferCells = [];
     this.hits = [];
     this.misses = [];
   }
 
   get allShipsSunk() {
     return this.ships.every((ship) => ship.sunk === true);
+  }
+
+  get occupiedCells() {
+    return PointsHelper.pointSetUnion(this.cellsWithShips, this.shipBufferCells);
   }
 }
 

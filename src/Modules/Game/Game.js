@@ -134,10 +134,14 @@ class Game {
     const shipLen = PointsHelper.getShipLen(this.startClick, targetCoords);
     DOM.paintShipLocation(this.DOM.placeShipModalGrid, this.currentPlayer.gameboard);
     if (PointsHelper.makeCoordsStraight(this.startClick, targetCoords) !== null) {
-      if (this.fleetListClone.some((ship) => ship.size === shipLen)) {
-        this.tempShipCoords = PointsHelper.pointSetDiff(PointsHelper
+      if (this.fleetListClone.some((ship) => ship.size === shipLen)
+      && (PointsHelper.pointSetIntersection(
+        targetCoords,
+        this.currentPlayer.gameboard.occupiedCells,
+      ).length === 0)) {
+        this.tempShipCoords = PointsHelper
           .returnPointsBetweenCoords(PointsHelper
-            .makeCoordsStraight(this.startClick, targetCoords)), this.startClick);
+            .makeCoordsStraight(this.startClick, targetCoords));
         this.DOM.colorPlaceShipLocations(this.tempShipCoords);
       }
     }
@@ -148,6 +152,13 @@ class Game {
       return;
     }
     if (this.startClick === null) {
+      if (PointsHelper.pointSetIntersection(
+        PointsHelper.DOMStringToObject(event.target.id),
+        this.currentPlayer.gameboard.occupiedCells,
+      ).length !== 0) {
+        alert('you need to click on a cell that is at least one cell away from another ship');
+        return;
+      }
       this.startClick = PointsHelper.DOMStringToObject(event.target.id);
       this.startClickElement = event.target;
       this.startClickElement.classList.add('coloredShip');
@@ -160,6 +171,21 @@ class Game {
         this.startClick = null;
         this.endClick = null;
         this.startClickElement.classList.remove('coloredShip');
+        DOM.addClassToGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
+        this.currentPlayer.gameboard.occupiedCells
+          .forEach((cell) => DOM.removeIndividualClassFromCell(this.DOM.placeShipModalGrid, cell, 'placeShipGridsHover'));
+        return;
+      }
+      if (PointsHelper.pointSetIntersection(
+        PointsHelper.returnPointsBetweenCoords(straightCoords),
+        this.currentPlayer.gameboard.occupiedCells,
+      ).length !== 0) {
+        alert('you need to click on a cell that is at least one cell away from another ship');
+        this.startClick = null;
+        this.endClick = null;
+        DOM.addClassToGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
+        this.currentPlayer.gameboard.occupiedCells
+          .forEach((cell) => DOM.removeIndividualClassFromCell(this.DOM.placeShipModalGrid, cell, 'placeShipGridsHover'));
         return;
       }
       const shipLength = PointsHelper.getShipLen(this.startClick, this.endClick);
@@ -169,6 +195,9 @@ class Game {
         this.startClick = null;
         this.endClick = null;
         this.startClickElement.classList.remove('coloredShip');
+        DOM.addClassToGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
+        this.currentPlayer.gameboard.occupiedCells
+          .forEach((cell) => DOM.removeIndividualClassFromCell(this.DOM.placeShipModalGrid, cell, 'placeShipGridsHover'));
         return;
       }
       this.currentPlayer.gameboard.placeShip(straightCoords);
@@ -187,6 +216,8 @@ class Game {
       this.startClick = null;
       this.endClick = null;
       DOM.addClassToGridCell(this.DOM.placeShipModalGrid, 'placeShipGridsHover');
+      this.currentPlayer.gameboard.occupiedCells
+        .forEach((cell) => DOM.removeIndividualClassFromCell(this.DOM.placeShipModalGrid, cell, 'placeShipGridsHover'));
     }
   }
 
