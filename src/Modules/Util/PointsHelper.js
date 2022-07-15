@@ -28,7 +28,7 @@ class PointsHelper {
   }
 
   static DOMStringToObject(DOMString) {
-    return { x: DOMString.split(',')[1], y: DOMString.split(',')[2] };
+    return { x: Number(DOMString.split(',')[1]), y: Number(DOMString.split(',')[2]) };
   }
 
   static breakApartShipPoints(pointPair) {
