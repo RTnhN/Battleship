@@ -10,7 +10,7 @@ function removeOnePointFromArray() {
 }
 
 
-test('Create computer player and attack', () => {
+test('Remove one point from array', () => {
   expect(removeOnePointFromArray()).toEqual([{x:1, y:1}, {x:3, y:3}]);
 });
 
@@ -21,7 +21,7 @@ function removeTwoPointsFromArray() {
 }
 
 
-test('Create computer player and attack', () => {
+test('Remove two points from array', () => {
   expect(removeTwoPointsFromArray()).toEqual([{x:3, y:3}]);
 });
 
@@ -32,6 +32,40 @@ function removeOnePointFromArrayNotInArray() {
 }
 
 
-test('Create computer player and attack', () => {
+test('Remove one point from array that is not originally in an array', () => {
   expect(removeOnePointFromArrayNotInArray()).toEqual([{x:1, y:1}, {x:3, y:3}]);
+});
+
+function unionTwoArraysPoints() {
+  const points = [{x:1, y:1}, {x:2, y:2}, {x:3, y:3}];
+  const excPoints =  {x:2, y:2};
+  return PointsHelper.pointSetUnion(points, excPoints);
+}
+
+
+test('Do a union of an array and a point', () => {
+  expect(unionTwoArraysPoints()).toEqual([{x:1, y:1}, {x:2, y:2}, {x:3, y:3}]);
+});
+
+function intersectTwoArraysPoints() {
+  const points = [{x:1, y:1}, {x:2, y:2}, {x:3, y:3}];
+  const excPoints =  {x:2, y:2};
+  return PointsHelper.pointSetIntersection(points, excPoints);
+}
+
+
+test('Do a union of an array and a point', () => {
+  expect(intersectTwoArraysPoints()).toEqual([{x:2, y:2}]);
+});
+
+
+function intersectTwoArraysPointsDestructively() {
+  const points = [{x:1, y:1}, {x:2, y:2}, {x:3, y:3}];
+  const excPoints =  {x:5, y:5};
+  return PointsHelper.pointSetIntersection(points, excPoints);
+}
+
+
+test('Do a union of an array and a point', () => {
+  expect(intersectTwoArraysPointsDestructively()).toEqual([]);
 });

@@ -60,8 +60,23 @@ class PointsHelper {
 
   static pointSetDiff(points, excPoints) {
     const excPointsArray = Array.isArray(excPoints) ? excPoints : [excPoints];
-    return points.filter((point) => excPointsArray
-      .every(((excPoint) => !_.isEqual(excPoint, point))));
+    return _.differenceWith(points, excPointsArray, _.isEqual);
+  }
+
+  static pointSetUnion(pointsA, pointsB) {
+    const pointsAArray = Array.isArray(pointsA) ? pointsA : [pointsA];
+    const pointsBArray = Array.isArray(pointsB) ? pointsB : [pointsB];
+    return _.unionWith(pointsAArray, pointsBArray, _.isEqual);
+  }
+
+  static pointSetIntersection(pointsA, pointsB) {
+    const pointsAArray = Array.isArray(pointsA) ? pointsA : [pointsA];
+    const pointsBArray = Array.isArray(pointsB) ? pointsB : [pointsB];
+    return _.intersectionWith(pointsAArray, pointsBArray, _.isEqual);
+  }
+
+  static uniquePoints(points) {
+    return _.uniqWith(points, _.isEqual);
   }
 
   static makeCoordsStraight(start, end) {
